@@ -31,14 +31,14 @@ const StyledTable = styled.table`
   }
 `;
 
-export default ({ data, titles, remove, edit }: IProps) => (
-  <StyledTable>
-    {data.length === 0 ? (
-      <>
-        <LottieCustom name="search" />
-        <label>Nenhum produto encontrado</label>
-      </>
-    ) : (
+export default ({ data, titles, remove, edit }: IProps) =>
+  data.length === 0 ? (
+    <>
+      <LottieCustom name="search" />
+      <label>Nenhum produto encontrado</label>
+    </>
+  ) : (
+    <StyledTable>
       <>
         <thead>
           <tr>
@@ -73,6 +73,5 @@ export default ({ data, titles, remove, edit }: IProps) => (
           ))}
         </tbody>
       </>
-    )}
-  </StyledTable>
-);
+    </StyledTable>
+  );

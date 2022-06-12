@@ -1,7 +1,8 @@
 import { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import IProductes from "../interfaces/IProductes";
 import Swal from "sweetalert2";
+
+import IProductes from "../interfaces/IProductes";
 
 type PropProductesProvider = {
   children: JSX.Element;
@@ -11,10 +12,10 @@ const initialValue = {
   productes: [
     {
       id: "",
-      categoria: "",
-      nomeProduto: "",
-      nomeFornecedor: "",
-      valor: "",
+      productCategory: "",
+      productName: "",
+      providerrName: "",
+      productPrice: 0,
     },
   ],
   register: (productes: IProductes) => {},
@@ -26,6 +27,8 @@ export const ProductesContext = createContext(initialValue);
 
 function ProductesProvider({ children }: PropProductesProvider) {
   const [productes, setProductes] = useState<IProductes[]>([]);
+
+  const [actionRemove, setActionRemove] = useState(false);
 
   const edit = (data: IProductes) => {
     //todas as products fora a que está sendo editada
@@ -48,11 +51,8 @@ function ProductesProvider({ children }: PropProductesProvider) {
       confirmButtonColor: "red",
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log(
-          "productes.filter((item) => item.id !== id)",
-          productes.filter((item) => item.id !== id)
-        );
         setProductes(productes.filter((item) => item.id !== id));
+        setActionRemove(true);
         toast.success("Sucesso ao excluir produto");
       }
     });
@@ -70,9 +70,11 @@ function ProductesProvider({ children }: PropProductesProvider) {
   }, []);
 
   //Adiciona valor no localStorage sempre que products muda de valor
+  //Caso o último registro da tablea seja apagado foi criado uma variável para tratar esse caso
   useEffect(() => {
-    if (productes.length !== 0) {
+    if (productes.length !== 0 || actionRemove) {
       localStorage.setItem("products", JSON.stringify(productes));
+      setActionRemove(false);
     }
   }, [productes]);
 

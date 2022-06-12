@@ -1,24 +1,27 @@
+import { useNavigate, useParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+
+import { FaArrowLeft } from "react-icons/fa";
+
+import { ProductesContext } from "../../../context/ProductesContext";
 import { ButtonCustom } from "../../../components/ButtonCustom";
 import { InputCustom } from "../../../components/InputCustom";
-import { CardCustom } from "../../../components/CardCustom";
-import { FaArrowLeft } from "react-icons/fa";
-import "./styles.scss";
-import { ProductesContext } from "../../../context/ProductesContext";
-import IProductes from "../../../interfaces/IProductes";
 import { AlertCustom } from "../../../components/AlertCustom";
-import { useNavigate, useParams } from "react-router-dom";
+import { CardCustom } from "../../../components/CardCustom";
+import IProductes from "../../../interfaces/IProductes";
 
-const initialState = {
-  id: uuidv4(),
-  categoria: "",
-  nomeProduto: "",
-  nomeFornecedor: "",
-  valor: "",
-};
+import "../styles.scss";
 
 const FormProducts = () => {
+  const initialState = {
+    id: uuidv4(),
+    productCategory: "",
+    productName: "",
+    providerrName: "",
+    productPrice: 0,
+  };
+
   const [producterRegister, setProducterRegister] =
     useState<IProductes>(initialState);
 
@@ -39,10 +42,10 @@ const FormProducts = () => {
   const hanldeClick = () => {
     setMessage("");
     if (
-      producterRegister.categoria === "" ||
-      producterRegister.nomeFornecedor === "" ||
-      producterRegister.nomeProduto === "" ||
-      producterRegister.valor === ""
+      producterRegister.productCategory === "" ||
+      producterRegister.providerrName === "" ||
+      producterRegister.productName === "" ||
+      producterRegister.productPrice === 0
     ) {
       setMessage("Preencha todos os campos obrigatórios");
     } else {
@@ -50,7 +53,6 @@ const FormProducts = () => {
         setProducterRegister(initialState);
         register(producterRegister);
       } else {
-        console.log("producterRegister", producterRegister);
         edit(producterRegister);
         navigate("/");
       }
@@ -76,44 +78,50 @@ const FormProducts = () => {
           <ButtonCustom theme="secondary" onClick={goBack}>
             <FaArrowLeft color="var(--green)" />
           </ButtonCustom>
-          <label className="title">{label} produto</label>
+          <h5 className="title">{label} produto</h5>
         </div>
         <ButtonCustom theme="primary" onClick={hanldeClick}>
           {label}
         </ButtonCustom>
       </div>
-      <div className="twoColumns">
+      <div>
+        <label>Categoria do produto *</label>
         <div>
-          <label>Categoria do produto *</label>
           <InputCustom
-            value={producterRegister.categoria}
-            name="categoria"
+            value={producterRegister.productCategory}
+            name="productCategory"
             onChange={handleChange}
           />
         </div>
+      </div>
+      <div>
+        <label>Nome do produto *</label>
         <div>
-          <label>Nome do produto *</label>
           <InputCustom
-            value={producterRegister.nomeProduto}
-            name="nomeProduto"
+            value={producterRegister.productName}
+            name="productName"
             onChange={handleChange}
           />
         </div>
+      </div>
+      <div>
+        <label>Nome do Fornecedor *</label>
         <div>
-          <label>Nome do Fornecedor *</label>
           <InputCustom
-            value={producterRegister.nomeFornecedor}
-            name="nomeFornecedor"
+            value={producterRegister.providerrName}
+            name="providerrName"
             onChange={handleChange}
           />
         </div>
+      </div>
+      <div>
+        <label>Valor do produto *</label>
         <div>
-          <label>Valor do produto *</label>
           <InputCustom
-            value={producterRegister.valor}
-            name="valor"
+            value={producterRegister.productPrice}
+            name="productPrice"
             onChange={handleChange}
-            type={"number"}
+            type="number"
           />
         </div>
       </div>

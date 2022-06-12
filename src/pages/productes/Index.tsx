@@ -1,9 +1,12 @@
-import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+
+import { ProductesContext } from "../../context/ProductesContext";
 import { ButtonCustom } from "../../components/ButtonCustom";
 import { CardCustom } from "../../components/CardCustom";
 import TableCustom from "../../components/TableCustom";
-import { ProductesContext } from "../../context/ProductesContext";
+
+import "./styles.scss";
 
 const Productes = () => {
   const navigate = useNavigate();
@@ -27,7 +30,7 @@ const Productes = () => {
   return (
     <CardCustom>
       <div className="mb-5 justify-content-between d-flex">
-        <h5>Produtos</h5>
+        <h5 className="title">Produtos</h5>
         <ButtonCustom theme="primary" onClick={toRegister}>
           Cadastrar
         </ButtonCustom>

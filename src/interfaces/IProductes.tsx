@@ -1,9 +1,9 @@
 interface IProductes {
   id: string;
-  categoria: string;
-  nomeProduto: string;
-  nomeFornecedor: string;
-  valor: string;
+  productCategory: string;
+  productName: string;
+  providerrName: string;
+  productPrice: number;
 }
 
 export default IProductes;

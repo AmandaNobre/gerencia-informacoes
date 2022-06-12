@@ -1,8 +1,9 @@
-import styled from "styled-components";
-import IProductes from "../interfaces/IProductes";
-
 import { FaTrash, FaPen } from "react-icons/fa";
 
+import styled from "styled-components";
+
+import IProductes from "../interfaces/IProductes";
+import { LottieCustom } from "./LottieCustom";
 interface IProps {
   data: Array<IProductes>;
   titles: Array<string>;
@@ -14,14 +15,6 @@ const StyledTable = styled.table`
   width: 100%;
   border: 1px solid var(--darkGrey);
 
-  td,
-  th {
-  }
-  /* td,
-  th {
-    border: 1px solid;
-  } */
-
   td {
     padding: 5px 10px;
   }
@@ -32,35 +25,54 @@ const StyledTable = styled.table`
   thead > tr {
     background-color: #f9f9f9;
   }
-  caption {
-    font-size: 0.9em;
-    padding: 5px;
-    font-weight: bold;
+
+  th {
+    padding-left: 10px;
   }
 `;
 
 export default ({ data, titles, remove, edit }: IProps) => (
   <StyledTable>
-    <thead>
-      <tr>
-        {titles.map((title, index) => (
-          <th key={index}>{title}</th>
-        ))}
-      </tr>
-    </thead>
-    <tbody>
-      {data.map((item, index) => (
-        <tr key={index}>
-          <td>{item.categoria}</td>
-          <td>{item.nomeProduto}</td>
-          <td>{item.nomeFornecedor}</td>
-          <td>{item.valor}</td>
-          <td>
-            <FaTrash onClick={() => remove(item.id)} />
-            <FaPen onClick={() => edit(item.id)} />
-          </td>
-        </tr>
-      ))}
-    </tbody>
+    {data.length === 0 ? (
+      <>
+        <LottieCustom name="search" />
+        <label>Nenhum produto encontrado</label>
+      </>
+    ) : (
+      <>
+        <thead>
+          <tr>
+            {titles.map((title, index) => (
+              <th key={index}>{title}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {data.map((item, index) => (
+            <>
+              {console.log("item", item)}
+              <tr key={index}>
+                <td>{item.productCategory}</td>
+                <td>{item.productName}</td>
+                <td>{item.providerrName}</td>
+                <td>
+                  {new Intl.NumberFormat("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                  }).format(item.productPrice)}
+                </td>
+                <td>
+                  <FaTrash
+                    onClick={() => remove(item.id)}
+                    className="iconBox"
+                  />
+                  <FaPen onClick={() => edit(item.id)} />
+                </td>
+              </tr>
+            </>
+          ))}
+        </tbody>
+      </>
+    )}
   </StyledTable>
 );

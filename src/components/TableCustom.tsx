@@ -39,39 +39,34 @@ export default ({ data, titles, remove, edit }: IProps) =>
     </>
   ) : (
     <StyledTable>
-      <>
-        <thead>
-          <tr>
-            {titles.map((title, index) => (
-              <th key={index}>{title}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((item, index) => (
-            <>
-              {console.log("item", item)}
-              <tr key={index}>
-                <td>{item.productCategory}</td>
-                <td>{item.productName}</td>
-                <td>{item.providerrName}</td>
-                <td>
-                  {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "BRL",
-                  }).format(item.productPrice)}
-                </td>
-                <td>
-                  <FaTrash
-                    onClick={() => remove(item.id)}
-                    className="iconBox"
-                  />
-                  <FaPen onClick={() => edit(item.id)} />
-                </td>
-              </tr>
-            </>
+      <thead>
+        <tr>
+          {titles.map((title, index) => (
+            <th key={index}>{title}</th>
           ))}
-        </tbody>
-      </>
+        </tr>
+      </thead>
+      <tbody>
+        {data.map((item, index) => (
+          <>
+            {console.log("item", item)}
+            <tr key={index}>
+              <td>{item.productCategory}</td>
+              <td>{item.productName}</td>
+              <td>{item.providerrName}</td>
+              <td>
+                {new Intl.NumberFormat("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                }).format(item.productPrice)}
+              </td>
+              <td>
+                <FaTrash onClick={() => remove(item.id)} className="iconBox" />
+                <FaPen onClick={() => edit(item.id)} />
+              </td>
+            </tr>
+          </>
+        ))}
+      </tbody>
     </StyledTable>
   );

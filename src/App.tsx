@@ -1,11 +1,15 @@
-import { PagesRoutes } from "./routes/PagesRoutes";
+import { ToastContainer } from "react-toastify";
+import { Layout } from "./contains/Layout";
 
+import "react-toastify/dist/ReactToastify.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles.scss";
 
 function App() {
   return (
     <div className="App">
-      <PagesRoutes />
+      <ToastContainer />
+      <Layout />
     </div>
   );
 }
